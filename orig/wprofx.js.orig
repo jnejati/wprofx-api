@@ -1,0 +1,15 @@
+var fs = require('fs'),
+path = require('path');
+const util = require('util');
+
+var myArgs = process.argv.slice(2);
+const baseDir = '/home/jnejati/trace_files/';
+var traceFile =  myArgs[0]
+var outputFile = myArgs[1];
+var traceObj = JSON.parse(fs.readFileSync(traceFile, 'utf8'));
+var Analyze = require('./Analyze');
+
+let analyze = new Analyze();
+var output = analyze.analyzeTrace(traceObj);
+fs.writeFileSync(outputFile, JSON.stringify(analyze.output));
+console.log(util.inspect(analyze.output, {depth: null}));
